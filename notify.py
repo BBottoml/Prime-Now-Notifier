@@ -19,22 +19,21 @@ def text_alerts(message):
 if __name__ == "__main__":
     browser_profile = webdriver.ChromeOptions()
     browser_profile.add_experimental_option('prefs', {'intl.accept_languages': 'en,en_US'})
-    browser = webdriver.Chrome(options=browser_profile)
+    browser = webdriver.Chrome(options=browser_profile, executable_path=os.getenv('CHROMEDRIVER_PATH'))
     sleep(25)    
 
     try:
         while True: 
             browser.get(r"https://primenow.amazon.com/storefront?merchantId=A1BV2214E4H2PJ&ref_=pn_gw_nav_sbs_1_A1BV2214E4H2PJ")
-            sleep(3)
+            sleep(300)
             banner = browser.find_element_by_xpath(
                 "/html/body/div[1]/div/header/div[1]/div[1]/div[3]/div/div[1]/div[2]")
+            print(banner.text)
             if "sold out" in banner.text:
-                print(banner.text)
                 continue
             else:
                 text_alerts(message="Prime Now delivery slot available!")
                 sleep(60)
-                
-    except:
-        print("Exception raised! ")
+    except Exception as e:
+        print("Exception raised! ", e)
         text_alerts(message="An error occurred in the PrimeNow Notifier.")
