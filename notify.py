@@ -1,9 +1,17 @@
 import requests
 from time import sleep
 from selenium import webdriver
+import os 
+from twilio.rest import Client
 
-_API_KEY_ = ""
-_PHONE_NUM = ""
+def text_alerts(message):
+    account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+    auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(
+        to=os.getenv("MY_PHONE"), from_=os.getenv("TWILIO_PHONE"), body=message
+    )
+    return message.sid
 
 if __name__ == "__main__":
     browser_profile = webdriver.ChromeOptions()
@@ -18,21 +26,12 @@ if __name__ == "__main__":
             banner = browser.find_element_by_xpath(
                 "/html/body/div[1]/div/header/div[1]/div[1]/div[3]/div/div[1]/div[2]")
             if "sold out" in banner.text:
+                print(banner.text)
                 continue
             else:
-                resp = requests.post('https://textbelt.com/text', {
-                    'phone': _PHONE_NUM,
-                    'message': 'Slots available!',
-                    'key': _API_KEY_,
-                    })
-                print(resp.json())
+                text_alerts(message="Prime Now delivery slot available!")
                 sleep(60)
                 
     except:
         print("Exception raised! ")
-        resp = requests.post('https://textbelt.com/text', {
-            'phone': _PHONE_NUM,
-            'message': 'Exception raised!',
-            'key': _API_KEY_,
-            })
-        print(resp.json())
+        text_alerts(message="An error occurred in the PrimeNow Notifier.")
