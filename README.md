@@ -21,6 +21,6 @@ Usage:
 
     `pip install .` 
 
-(5) Create a .env file similar to `example.env`, add your Twilio keys and phone number. 
+(5) Create a .env file similar to `example.env`, add your Twilio keys and phone numbers. 
 
 (6) 
