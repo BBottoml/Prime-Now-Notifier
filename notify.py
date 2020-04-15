@@ -3,6 +3,9 @@ from time import sleep
 from selenium import webdriver
 import os 
 from twilio.rest import Client
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 def text_alerts(message):
     account_sid = os.getenv("TWILIO_ACCOUNT_SID")
