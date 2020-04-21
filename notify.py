@@ -4,6 +4,7 @@ from selenium import webdriver
 import os 
 from twilio.rest import Client
 from dotenv import load_dotenv, find_dotenv
+from builtins import Exception
 
 load_dotenv(find_dotenv())
 
