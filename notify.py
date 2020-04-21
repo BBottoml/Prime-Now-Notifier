@@ -25,10 +25,8 @@ if __name__ == "__main__":
     try:
         while True: 
             browser.get(r"https://primenow.amazon.com/storefront?merchantId=A1BV2214E4H2PJ&ref_=pn_gw_nav_sbs_1_A1BV2214E4H2PJ")
-            sleep(300)
             banner = browser.find_element_by_xpath(
                 "/html/body/div[1]/div/header/div[1]/div[1]/div[3]/div/div[1]/div[2]")
-            print(banner.text)
             if "sold out" in banner.text:
                 continue
             else:
